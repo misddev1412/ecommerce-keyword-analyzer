@@ -24,10 +24,26 @@ export default defineNuxtConfig({
     transpile: ['primevue']
   },
   i18n: {
-    locales: ['en', 'vi'],
+    langDir: 'locales',
+    locales: [
+      {
+        code: 'en',
+        file: 'en.json',
+        name: 'English'
+      },
+      {
+        code: 'vi',
+        file: 'vi.json',
+        name: 'Tiếng Việt'
+      }
+    ],
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
-    vueI18n: './i18n.config.ts'
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root'
+    }
   },
   runtimeConfig: {
     public: {
