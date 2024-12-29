@@ -8,21 +8,65 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id        String    @id @default(uuid())
+  email     String    @unique
   name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  analyses  ProductAnalysis[]
 }
 
 model Keyword {
-  id           String   @id @default(uuid())
+  id           String           @id @default(uuid())
   term         String
   searchVolume Int
   category     String?
-  source       String   // e.g., "amazon", "ebay", "etsy"
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  source       String           // e.g., "amazon", "ebay", "etsy"
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  products     ProductAnalysis[]
+}
+
+model ProductAnalysis {
+  id          String         @id @default(uuid())
+  url         String
+  title       String
+  description String?
+  price       Float
+  category    String?
+  userId      String
+  user        User           @relation(fields: [userId], references: [id])
+  keywords    Keyword[]
+  competitors CompetitorData[]
+  report      AnalysisReport?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model CompetitorData {
+  id              String         @id @default(uuid())
+  url             String
+  title           String
+  price           Float
+  rating          Float?
+  promotions      Json?         // Store promotion details
+  keywordUsage    Json?         // Store keyword usage patterns
+  productAnalysis ProductAnalysis @relation(fields: [analysisId], references: [id])
+  analysisId      String
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model AnalysisReport {
+  id                String         @id @default(uuid())
+  productAnalysis   ProductAnalysis @relation(fields: [analysisId], references: [id])
+  analysisId        String         @unique
+  keywordSuggestions Json          // Suggested keywords with scores
+  pricingInsights   Json          // Pricing recommendations
+  contentSuggestions Json          // Content improvement suggestions
+  seoRecommendations Json         // SEO optimization tips
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
 }
 
 model TrendReport {
