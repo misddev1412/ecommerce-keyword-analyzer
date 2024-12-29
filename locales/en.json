@@ -1,0 +1,37 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "productTitle": "Product Title",
+    "productUrl": "URL",
+    "analyzedDate": "Analyzed Date",
+    "actions": "Actions",
+    "trendingKeywords": "Trending Keywords"
+  },
+  "analysis": {
+    "newAnalysis": "New Analysis",
+    "productDetails": "Product Details",
+    "productUrl": "Product URL",
+    "urlPlaceholder": "Enter product URL (e.g., Amazon, eBay, Etsy)",
+    "category": "Category",
+    "marketplace": "Marketplace",
+    "analyze": "Analyze",
+    "extractedKeywords": "Extracted Keywords",
+    "keyword": "Keyword",
+    "searchVolume": "Search Volume",
+    "relevanceScore": "Relevance Score",
+    "competitorAnalysis": "Competitor Analysis",
+    "price": "Price",
+    "rating": "Rating",
+    "recommendations": "Recommendations",
+    "details": "Analysis Details",
+    "download": "Download Report",
+    "share": "Share",
+    "keywordPerformance": "Keyword Performance",
+    "topKeywords": "Top Keywords",
+    "volume": "Volume",
+    "trend": "Trend",
+    "competitorInsights": "Competitor Insights",
+    "competitor": "Competitor",
+    "actionableInsights": "Actionable Insights"
+  }
+} 

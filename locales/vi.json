@@ -1,0 +1,37 @@
+{
+  "dashboard": {
+    "title": "Bảng Điều Khiển 1",
+    "productTitle": "Tên Sản Phẩm",
+    "productUrl": "Đường Dẫn",
+    "analyzedDate": "Ngày Phân Tích",
+    "actions": "Thao Tác",
+    "trendingKeywords": "Từ Khóa Xu Hướng"
+  },
+  "analysis": {
+    "newAnalysis": "Phân Tích Mới",
+    "productDetails": "Chi Tiết Sản Phẩm",
+    "productUrl": "Đường Dẫn Sản Phẩm",
+    "urlPlaceholder": "Nhập đường dẫn sản phẩm (ví dụ: Amazon, eBay, Etsy)",
+    "category": "Danh Mục",
+    "marketplace": "Sàn Thương Mại",
+    "analyze": "Phân Tích",
+    "extractedKeywords": "Từ Khóa Trích Xuất",
+    "keyword": "Từ Khóa",
+    "searchVolume": "Lượt Tìm Kiếm",
+    "relevanceScore": "Điểm Liên Quan",
+    "competitorAnalysis": "Phân Tích Đối Thủ",
+    "price": "Giá",
+    "rating": "Đánh Giá",
+    "recommendations": "Đề Xuất",
+    "details": "Chi Tiết Phân Tích",
+    "download": "Tải Báo Cáo",
+    "share": "Chia Sẻ",
+    "keywordPerformance": "Hiệu Suất Từ Khóa",
+    "topKeywords": "Từ Khóa Hàng Đầu",
+    "volume": "Lượng",
+    "trend": "Xu Hướng",
+    "competitorInsights": "Thông Tin Đối Thủ",
+    "competitor": "Đối Thủ",
+    "actionableInsights": "Đề Xuất Hành Động"
+  }
+} 
