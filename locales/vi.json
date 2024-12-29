@@ -1,37 +1,58 @@
 {
   "dashboard": {
-    "title": "Bảng Điều Khiển",
-    "productTitle": "Tên Sản Phẩm",
-    "productUrl": "Đường Dẫn",
-    "analyzedDate": "Ngày Phân Tích",
-    "actions": "Thao Tác",
-    "trendingKeywords": "Từ Khóa Xu Hướng"
+    "hero": {
+      "title": "Phân tích sản phẩm thông minh",
+      "subtitle": "Dán link sản phẩm của bạn để nhận phân tích chi tiết và đề xuất cải thiện"
+    },
+    "quickAnalysis": {
+      "placeholder": "Dán link sản phẩm từ Shopee, Lazada, Tiki hoặc Amazon",
+      "analyze": "Phân tích ngay"
+    },
+    "features": {
+      "keywords": {
+        "title": "Phân tích từ khóa",
+        "description": "Tìm ra những từ khóa quan trọng giúp sản phẩm của bạn dễ dàng được tìm thấy"
+      },
+      "competitors": {
+        "title": "So sánh đối thủ",
+        "description": "Xem xét giá cả và chiến lược của đối thủ cạnh tranh"
+      },
+      "recommendations": {
+        "title": "Đề xuất tối ưu",
+        "description": "Nhận các đề xuất cụ thể để cải thiện hiệu suất sản phẩm"
+      }
+    },
+    "recentAnalyses": {
+      "title": "Phân tích gần đây",
+      "viewDetails": "Xem chi tiết",
+      "reanalyze": "Phân tích lại"
+    }
   },
   "analysis": {
-    "newAnalysis": "Phân Tích Mới",
-    "productDetails": "Chi Tiết Sản Phẩm",
-    "productUrl": "Đường Dẫn Sản Phẩm",
-    "urlPlaceholder": "Nhập đường dẫn sản phẩm (ví dụ: Amazon, eBay, Etsy)",
-    "category": "Danh Mục",
-    "marketplace": "Sàn Thương Mại",
-    "analyze": "Phân Tích",
-    "extractedKeywords": "Từ Khóa Trích Xuất",
-    "keyword": "Từ Khóa",
-    "searchVolume": "Lượt Tìm Kiếm",
-    "relevanceScore": "Điểm Liên Quan",
-    "competitorAnalysis": "Phân Tích Đối Thủ",
+    "newAnalysis": "Phân tích mới",
+    "productDetails": "Chi tiết sản phẩm",
+    "productUrl": "Link sản phẩm",
+    "urlPlaceholder": "Nhập link sản phẩm (ví dụ: từ Shopee, Lazada, Tiki)",
+    "category": "Danh mục",
+    "marketplace": "Sàn thương mại",
+    "analyze": "Phân tích",
+    "extractedKeywords": "Từ khóa trích xuất",
+    "keyword": "Từ khóa",
+    "searchVolume": "Lượt tìm kiếm",
+    "relevanceScore": "Điểm liên quan",
+    "competitorAnalysis": "Phân tích đối thủ",
     "price": "Giá",
-    "rating": "Đánh Giá",
-    "recommendations": "Đề Xuất",
-    "details": "Chi Tiết Phân Tích",
-    "download": "Tải Báo Cáo",
-    "share": "Chia Sẻ",
-    "keywordPerformance": "Hiệu Suất Từ Khóa",
-    "topKeywords": "Từ Khóa Hàng Đầu",
+    "rating": "Đánh giá",
+    "recommendations": "Đề xuất",
+    "details": "Chi tiết phân tích",
+    "download": "Tải báo cáo",
+    "share": "Chia sẻ",
+    "keywordPerformance": "Hiệu suất từ khóa",
+    "topKeywords": "Từ khóa hàng đầu",
     "volume": "Lượng",
-    "trend": "Xu Hướng",
-    "competitorInsights": "Thông Tin Đối Thủ",
-    "competitor": "Đối Thủ",
-    "actionableInsights": "Đề Xuất Hành Động"
+    "trend": "Xu hướng",
+    "competitorInsights": "Thông tin đối thủ",
+    "competitor": "Đối thủ",
+    "actionableInsights": "Đề xuất hành động"
   }
 } 

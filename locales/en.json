@@ -1,17 +1,38 @@
 {
   "dashboard": {
-    "title": "Dashboard",
-    "productTitle": "Product Title",
-    "productUrl": "URL",
-    "analyzedDate": "Analyzed Date",
-    "actions": "Actions",
-    "trendingKeywords": "Trending Keywords"
+    "hero": {
+      "title": "Smart Product Analysis",
+      "subtitle": "Paste your product link to get detailed analysis and improvement suggestions"
+    },
+    "quickAnalysis": {
+      "placeholder": "Paste product link from Shopee, Lazada, Tiki, or Amazon",
+      "analyze": "Analyze Now"
+    },
+    "features": {
+      "keywords": {
+        "title": "Keyword Analysis",
+        "description": "Discover important keywords that make your product easily discoverable"
+      },
+      "competitors": {
+        "title": "Competitor Comparison",
+        "description": "Review pricing and strategies of your competitors"
+      },
+      "recommendations": {
+        "title": "Optimization Tips",
+        "description": "Get specific recommendations to improve your product performance"
+      }
+    },
+    "recentAnalyses": {
+      "title": "Recent Analyses",
+      "viewDetails": "View Details",
+      "reanalyze": "Reanalyze"
+    }
   },
   "analysis": {
     "newAnalysis": "New Analysis",
     "productDetails": "Product Details",
     "productUrl": "Product URL",
-    "urlPlaceholder": "Enter product URL (e.g., Amazon, eBay, Etsy)",
+    "urlPlaceholder": "Enter product URL (e.g., from Shopee, Lazada, Tiki)",
     "category": "Category",
     "marketplace": "Marketplace",
     "analyze": "Analyze",
