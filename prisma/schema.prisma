@@ -8,11 +8,11 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
+  id        String   @id @default(uuid())
+  email     String   @unique
   name      String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   analyses  ProductAnalysis[]
 }
 
@@ -20,10 +20,11 @@ model Keyword {
   id           String           @id @default(uuid())
   term         String
   searchVolume Int
+  trend        String          // 'up' | 'down'
+  platform     String          // 'shopee' | 'lazada' | 'tiktok'
   category     String?
-  source       String           // e.g., "amazon", "ebay", "etsy"
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
   products     ProductAnalysis[]
 }
 
@@ -34,6 +35,7 @@ model ProductAnalysis {
   description String?
   price       Float
   category    String?
+  platform    String        // 'shopee' | 'lazada' | 'tiktok'
   userId      String
   user        User           @relation(fields: [userId], references: [id])
   keywords    Keyword[]
@@ -47,10 +49,13 @@ model CompetitorData {
   id              String         @id @default(uuid())
   url             String
   title           String
+  shop            String
   price           Float
+  sales           Int
+  revenue         Float
   rating          Float?
-  promotions      Json?         // Store promotion details
-  keywordUsage    Json?         // Store keyword usage patterns
+  platform        String        // 'shopee' | 'lazada' | 'tiktok'
+  image           String?
   productAnalysis ProductAnalysis @relation(fields: [analysisId], references: [id])
   analysisId      String
   createdAt       DateTime       @default(now())
@@ -69,10 +74,34 @@ model AnalysisReport {
   updatedAt         DateTime       @updatedAt
 }
 
-model TrendReport {
-  id        String   @id @default(uuid())
-  title     String
-  data      Json
+// For trending keywords on homepage
+model TrendingKeyword {
+  id           String   @id @default(uuid())
+  term         String
+  searchVolume Int
+  trend        String   // 'up' | 'down'
+  platform     String   // 'shopee' | 'lazada' | 'tiktok'
+  rank         Int      // Position in trending list
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([platform, rank])
+}
+
+// For top selling products on homepage
+model TopProduct {
+  id       String   @id @default(uuid())
+  title    String
+  shop     String
+  platform String   // 'shopee' | 'lazada' | 'tiktok'
+  price    Float
+  sales    Int
+  revenue  Float
+  image    String?
+  url      String
+  rank     Int      // Position in top products list
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([platform, rank])
 } 

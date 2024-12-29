@@ -240,8 +240,10 @@
 
 <script setup lang="ts">
 import { useAnalysisStore } from '~/stores/analysis'
+import { useTrendingStore } from '~/stores/trending'
 
 const analysisStore = useAnalysisStore()
+const trendingStore = useTrendingStore()
 const router = useRouter()
 const productUrl = ref('')
 
@@ -252,67 +254,11 @@ useHead({
   ]
 })
 
-// Mock data for top keywords
-const shopeeKeywords = ref([
-  { keyword: 'áo thun unisex', volume: '125K', trend: 'up' },
-  { keyword: 'quần jean baggy', volume: '98K', trend: 'up' },
-  { keyword: 'áo khoác bomber', volume: '87K', trend: 'down' },
-  { keyword: 'giày thể thao', volume: '76K', trend: 'up' },
-  { keyword: 'túi xách nữ', volume: '65K', trend: 'up' }
-])
-
-const lazadaKeywords = ref([
-  { keyword: 'điện thoại samsung', volume: '95K', trend: 'up' },
-  { keyword: 'laptop gaming', volume: '82K', trend: 'up' },
-  { keyword: 'máy lọc không khí', volume: '78K', trend: 'down' },
-  { keyword: 'robot hút bụi', volume: '67K', trend: 'up' },
-  { keyword: 'nồi chiên không dầu', volume: '56K', trend: 'up' }
-])
-
-const tiktokKeywords = ref([
-  { keyword: 'quần ống rộng', volume: '156K', trend: 'up' },
-  { keyword: 'áo croptop', volume: '134K', trend: 'up' },
-  { keyword: 'phụ kiện tóc', volume: '98K', trend: 'up' },
-  { keyword: 'đồ ngủ cute', volume: '87K', trend: 'down' },
-  { keyword: 'túi mini', volume: '76K', trend: 'up' }
-])
-
-// Mock data for top products
-const topProducts = ref([
-  {
-    rank: 1,
-    name: 'Áo Thun Unisex Form Rộng',
-    shop: 'Fashion Store',
-    platform: 'Shopee',
-    price: 89000,
-    sales: 15000,
-    revenue: 1335000000,
-    image: 'https://picsum.photos/seed/product1/100',
-    url: '#'
-  },
-  {
-    rank: 2,
-    name: 'Điện Thoại Samsung Galaxy A54',
-    shop: 'Mobile World',
-    platform: 'Lazada',
-    price: 8990000,
-    sales: 1200,
-    revenue: 10788000000,
-    image: 'https://picsum.photos/seed/product2/100',
-    url: '#'
-  },
-  {
-    rank: 3,
-    name: 'Set Đồ Nữ Hàn Quốc',
-    shop: 'Korea Fashion',
-    platform: 'TikTok Shop',
-    price: 259000,
-    sales: 8500,
-    revenue: 2201500000,
-    image: 'https://picsum.photos/seed/product3/100',
-    url: '#'
-  }
-])
+// Use trending store data
+const shopeeKeywords = computed(() => trendingStore.keywords.shopee)
+const lazadaKeywords = computed(() => trendingStore.keywords.lazada)
+const tiktokKeywords = computed(() => trendingStore.keywords.tiktok)
+const topProducts = computed(() => trendingStore.products)
 
 const features = [
   {
@@ -395,6 +341,10 @@ const openProductLink = (url: string) => {
 }
 
 onMounted(() => {
-  analysisStore.fetchRecentAnalyses()
+  Promise.all([
+    analysisStore.fetchRecentAnalyses(),
+    trendingStore.fetchTrendingKeywords(),
+    trendingStore.fetchTopProducts()
+  ])
 })
 </script> 
