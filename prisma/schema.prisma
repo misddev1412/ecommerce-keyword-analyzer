@@ -31,18 +31,22 @@ model Keyword {
 model ProductAnalysis {
   id          String         @id @default(uuid())
   url         String
-  title       String
+  title       String?        // Optional now as it will be filled after analysis
   description String?
-  price       Float
+  price       Float?         // Optional now as it will be filled after analysis
   category    String?
   platform    String        // 'shopee' | 'lazada' | 'tiktok'
-  userId      String
-  user        User           @relation(fields: [userId], references: [id])
+  status      String        // 'pending' | 'processing' | 'completed' | 'failed'
+  error       String?       // Store error message if analysis fails
+  userId      String?       // Make userId optional
+  user        User?         @relation(fields: [userId], references: [id])  // Make relation optional
   keywords    Keyword[]
   competitors CompetitorData[]
   report      AnalysisReport?
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
+  startedAt   DateTime?      // When analysis started
+  completedAt DateTime?      // When analysis completed
 }
 
 model CompetitorData {

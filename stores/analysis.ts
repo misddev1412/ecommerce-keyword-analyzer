@@ -24,6 +24,17 @@ interface Recommendation {
   action?: string
 }
 
+interface AnalysisStatus {
+  id: string
+  status: 'pending' | 'processing' | 'completed' | 'failed'
+  error?: string
+  timing: {
+    created: string
+    started?: string
+    completed?: string
+  }
+}
+
 interface Analysis {
   id: string
   title: string
@@ -39,16 +50,20 @@ interface Analysis {
 interface AnalysisState {
   recentAnalyses: Analysis[]
   currentAnalysis: Analysis | null
+  analysisStatus: Record<string, AnalysisStatus>
   loading: boolean
   error: string | null
+  pollingIntervals: Record<string, number>
 }
 
 export const useAnalysisStore = defineStore('analysis', {
   state: (): AnalysisState => ({
     recentAnalyses: [],
     currentAnalysis: null,
+    analysisStatus: {},
     loading: false,
-    error: null
+    error: null,
+    pollingIntervals: {}
   }),
 
   actions: {
@@ -86,11 +101,14 @@ export const useAnalysisStore = defineStore('analysis', {
       this.loading = true
       this.error = null
       try {
-        const response = await $fetch<Analysis>('/api/analysis', {
+        const response = await $fetch<{ id: string; status: string }>('/api/analysis', {
           method: 'POST',
           body: data
         })
-        this.recentAnalyses.unshift(response)
+        
+        // Start polling for status
+        this.startPolling(response.id)
+        
         return response
       } catch (error) {
         console.error('Failed to create analysis:', error)
@@ -101,8 +119,55 @@ export const useAnalysisStore = defineStore('analysis', {
       }
     },
 
+    async checkAnalysisStatus(id: string) {
+      try {
+        const status = await $fetch<AnalysisStatus>(`/api/analysis/status/${id}`)
+        this.analysisStatus[id] = status
+
+        // If analysis is complete or failed, stop polling
+        if (status.status === 'completed' || status.status === 'failed') {
+          this.stopPolling(id)
+          
+          // If completed, fetch full analysis
+          if (status.status === 'completed') {
+            await this.fetchAnalysis(id)
+          }
+        }
+
+        return status
+      } catch (error) {
+        console.error('Failed to check analysis status:', error)
+        this.stopPolling(id)
+        throw error
+      }
+    },
+
+    startPolling(id: string) {
+      // Stop any existing polling for this ID
+      this.stopPolling(id)
+
+      // Start new polling interval
+      this.pollingIntervals[id] = window.setInterval(() => {
+        this.checkAnalysisStatus(id)
+      }, 2000) // Poll every 2 seconds
+    },
+
+    stopPolling(id: string) {
+      if (this.pollingIntervals[id]) {
+        clearInterval(this.pollingIntervals[id])
+        delete this.pollingIntervals[id]
+      }
+    },
+
     clearError() {
       this.error = null
+    },
+
+    // Clean up on component unmount
+    cleanup() {
+      Object.keys(this.pollingIntervals).forEach(id => {
+        this.stopPolling(id)
+      })
     }
   }
 }) 

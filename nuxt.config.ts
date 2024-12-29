@@ -46,7 +46,10 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
+    brightDataToken: process.env.BRIGHT_DATA_TOKEN,
+    brightDataDatasetId: process.env.BRIGHT_DATA_DATASET_ID,
     public: {
+      appUrl: process.env.APP_URL,
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseKey: process.env.SUPABASE_KEY,
       clerkPublishableKey: process.env.CLERK_PUBLISHABLE_KEY

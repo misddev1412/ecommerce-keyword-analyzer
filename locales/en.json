@@ -81,6 +81,16 @@
     "trend": "Trend",
     "competitorInsights": "Competitor Insights",
     "competitor": "Competitor",
-    "actionableInsights": "Actionable Insights"
+    "actionableInsights": "Actionable Insights",
+    "statusPending": "Analysis Pending",
+    "statusProcessing": "Analysis in Progress",
+    "statusFailed": "Analysis Failed",
+    "pendingMessage": "Your analysis request has been received and is waiting to be processed.",
+    "processingMessage": "We are analyzing your product data. This may take a few minutes.",
+    "failedMessage": "There was an error analyzing your product. Please try again.",
+    "analyzing": "Analyzing...",
+    "waitingForKeywords": "Waiting for keyword data to be processed...",
+    "waitingForCompetitors": "Analyzing competitor data...",
+    "waitingForRecommendations": "Generating recommendations..."
   }
 } 

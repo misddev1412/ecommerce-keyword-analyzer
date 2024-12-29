@@ -81,6 +81,16 @@
     "trend": "Xu hướng",
     "competitorInsights": "Thông tin đối thủ",
     "competitor": "Đối thủ",
-    "actionableInsights": "Đề xuất hành động"
+    "actionableInsights": "Đề xuất hành động",
+    "statusPending": "Đang chờ phân tích",
+    "statusProcessing": "Đang phân tích",
+    "statusFailed": "Phân tích thất bại",
+    "pendingMessage": "Yêu cầu phân tích của bạn đã được nhận và đang chờ xử lý.",
+    "processingMessage": "Chúng tôi đang phân tích dữ liệu sản phẩm của bạn. Quá trình này có thể mất vài phút.",
+    "failedMessage": "Đã xảy ra lỗi khi phân tích sản phẩm của bạn. Vui lòng thử lại.",
+    "analyzing": "Đang phân tích...",
+    "waitingForKeywords": "Đang chờ xử lý dữ liệu từ khóa...",
+    "waitingForCompetitors": "Đang phân tích dữ liệu đối thủ...",
+    "waitingForRecommendations": "Đang tạo các đề xuất..."
   }
 } 

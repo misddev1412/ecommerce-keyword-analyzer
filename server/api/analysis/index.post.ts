@@ -3,115 +3,148 @@ import { H3Event } from 'h3'
 
 const prisma = new PrismaClient()
 
+interface ApiError {
+  statusCode?: number
+  message: string
+}
+
+interface BrightDataResponse {
+  error?: string
+  data?: Array<{
+    title?: string
+    description?: string
+    price?: string
+  }>
+}
+
 export default defineEventHandler(async (event: H3Event) => {
   try {
     const body = await readBody(event)
     const { url, category, marketplace } = body
 
-    // 1. Extract product information
-    const productInfo = await extractProductInfo(url)
+    // Validate URL format
+    if (!isValidUrl(url)) {
+      throw createError({
+        statusCode: 400,
+        message: 'Invalid URL format'
+      })
+    }
 
-    // 2. Extract and analyze keywords
-    const keywords = await analyzeKeywords(productInfo.description)
+    // Validate marketplace
+    if (!['shopee', 'lazada', 'tiktok'].includes(marketplace)) {
+      throw createError({
+        statusCode: 400,
+        message: 'Invalid marketplace. Must be one of: shopee, lazada, tiktok'
+      })
+    }
 
-    // 3. Get competitor data
-    const competitors = await getCompetitorData(url, marketplace)
+    // Extract domain name for initial title
+    const urlObj = new URL(url)
+    const initialTitle = urlObj.pathname.split('/').pop() || 'New Analysis'
 
-    // 4. Create analysis in database
+    // Create initial analysis record with pending status
     const analysis = await prisma.productAnalysis.create({
       data: {
         url,
-        title: productInfo.title,
-        description: productInfo.description,
-        price: productInfo.price,
-        category,
-        userId: event.context.auth?.userId, // Assuming auth middleware sets this
-        keywords: {
-          create: keywords.map(k => ({
-            term: k.term,
-            searchVolume: k.searchVolume,
-            category: k.category,
-            source: marketplace
-          }))
-        },
-        competitors: {
-          create: competitors.map(c => ({
-            url: c.url,
-            title: c.title,
-            price: c.price,
-            rating: c.rating,
-            promotions: c.promotions,
-            keywordUsage: c.keywordUsage
-          }))
+        title: initialTitle,
+        category: category || null,
+        platform: marketplace,
+        status: 'pending',
+        price: null,
+        description: null,
+        keywords: { create: [] },
+        competitors: { create: [] }
+      }
+    })
+
+    // Call Bright Data API for data extraction
+    const config = useRuntimeConfig()
+    const brightDataToken = config.brightDataToken
+    const brightDataDatasetId = config.brightDataDatasetId
+    const supabaseUrl = config.public.supabaseUrl
+
+    if (url.includes('lazada.vn')) {
+      try {
+        // Update status to processing before calling Bright Data
+        await prisma.productAnalysis.update({
+          where: { id: analysis.id },
+          data: {
+            status: 'processing',
+            startedAt: new Date()
+          }
+        })
+
+        // Call Bright Data API
+        await $fetch('https://api.brightdata.com/datasets/v3/trigger', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${brightDataToken}`,
+            'Content-Type': 'application/json'
+          },
+          query: {
+            dataset_id: brightDataDatasetId,
+            endpoint: `${supabaseUrl}/functions/v1/brightdata-webhook`,
+            format: 'json',
+            uncompressed_webhook: true,
+            include_errors: true,
+            custom_data: {
+              analysisId: analysis.id
+            }
+          },
+          body: [{
+            url: url
+          }]
+        })
+      } catch (error) {
+        // If Bright Data API call fails, update analysis status
+        await prisma.productAnalysis.update({
+          where: { id: analysis.id },
+          data: {
+            status: 'failed',
+            error: error instanceof Error ? error.message : 'Failed to trigger analysis',
+            completedAt: new Date()
+          }
+        })
+        throw error
+      }
+    } else {
+      // For other platforms - to be implemented
+      await prisma.productAnalysis.update({
+        where: { id: analysis.id },
+        data: {
+          status: 'failed',
+          error: 'Platform not supported yet',
+          completedAt: new Date()
         }
-      },
-      include: {
-        keywords: true,
-        competitors: true
-      }
-    })
+      })
+      throw createError({
+        statusCode: 400,
+        message: 'Platform not supported yet'
+      })
+    }
 
-    // 5. Generate recommendations
-    const recommendations = generateRecommendations(analysis)
-
-    // 6. Create analysis report
-    await prisma.analysisReport.create({
-      data: {
-        analysisId: analysis.id,
-        keywordSuggestions: recommendations.keywords,
-        pricingInsights: recommendations.pricing,
-        contentSuggestions: recommendations.content,
-        seoRecommendations: recommendations.seo
-      }
-    })
-
-    return analysis
-  } catch (error) {
+    return {
+      id: analysis.id,
+      url,
+      status: 'processing',
+      message: 'Analysis started successfully'
+    }
+  } catch (error: unknown) {
+    const apiError = error as ApiError
     console.error('Analysis creation failed:', error)
     throw createError({
-      statusCode: 500,
-      message: 'Failed to create analysis'
+      statusCode: apiError.statusCode || 500,
+      message: apiError.message || 'Failed to create analysis'
     })
   }
 })
 
-// Helper functions (to be implemented in separate files)
-async function extractProductInfo(url: string) {
-  // Implement product information extraction
-  return {
-    title: 'Sample Product',
-    description: 'Sample description',
-    price: 99.99
-  }
-}
-
-async function analyzeKeywords(text: string) {
-  // Implement keyword analysis
-  return [{
-    term: 'sample keyword',
-    searchVolume: 1000,
-    category: 'general'
-  }]
-}
-
-async function getCompetitorData(url: string, marketplace: string) {
-  // Implement competitor data fetching
-  return [{
-    url: 'competitor-url',
-    title: 'Competitor Product',
-    price: 89.99,
-    rating: 4.5,
-    promotions: {},
-    keywordUsage: {}
-  }]
-}
-
-function generateRecommendations(analysis: any) {
-  // Implement recommendation generation
-  return {
-    keywords: {},
-    pricing: {},
-    content: {},
-    seo: {}
+// Helper function to validate URL
+function isValidUrl(url: string): boolean {
+  try {
+    new URL(url)
+    return true
+  } catch {
+    return false
   }
 } 
