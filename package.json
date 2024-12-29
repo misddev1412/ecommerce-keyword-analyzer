@@ -1,0 +1,31 @@
+{
+  "name": "trendyki",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare && prisma generate"
+  },
+  "devDependencies": {
+    "@nuxtjs/i18n": "8.0.0",
+    "@nuxtjs/tailwindcss": "^6.10.1",
+    "@types/node": "^20.10.4",
+    "nuxt": "^3.8.2",
+    "prisma": "^5.7.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@clerk/clerk-js": "4.65.1",
+    "@pinia/nuxt": "0.5.1",
+    "@prisma/client": "^5.7.0",
+    "@supabase/supabase-js": "2.39.0",
+    "chart.js": "4.4.1",
+    "lucide-vue-next": "0.294.0",
+    "pinia": "2.1.7",
+    "primeicons": "6.0.1",
+    "primevue": "3.42.0"
+  }
+}
