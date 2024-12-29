@@ -5,8 +5,36 @@
       "subtitle": "Dán link sản phẩm của bạn để nhận phân tích chi tiết và đề xuất cải thiện"
     },
     "quickAnalysis": {
-      "placeholder": "Dán link sản phẩm từ Shopee, Lazada, Tiki hoặc Amazon",
+      "placeholder": "Dán link sản phẩm từ Shopee, Lazada, Tiki hoặc TikTok Shop",
       "analyze": "Phân tích ngay"
+    },
+    "topKeywords": {
+      "title": "Từ khóa thịnh hành theo sàn",
+      "shopee": "Shopee",
+      "lazada": "Lazada",
+      "tiktok": "TikTok Shop",
+      "term": "Từ khóa",
+      "volume": "Lượt tìm kiếm"
+    },
+    "topProducts": {
+      "title": "Top sản phẩm bán chạy",
+      "rank": "Thứ hạng",
+      "product": "Sản phẩm",
+      "platform": "Sàn TMĐT",
+      "price": "Giá bán",
+      "sales": "Đã bán",
+      "revenue": "Doanh thu"
+    },
+    "marketInsights": {
+      "title": "Thông tin thị trường",
+      "totalProducts": "Tổng số sản phẩm",
+      "avgPrice": "Giá trung bình",
+      "competition": "Mức độ cạnh tranh",
+      "searchVolume": "Lượt tìm kiếm"
+    },
+    "charts": {
+      "popularCategories": "Danh mục phổ biến",
+      "searchVolumeTrends": "Xu hướng tìm kiếm"
     },
     "features": {
       "keywords": {
@@ -32,7 +60,7 @@
     "newAnalysis": "Phân tích mới",
     "productDetails": "Chi tiết sản phẩm",
     "productUrl": "Link sản phẩm",
-    "urlPlaceholder": "Nhập link sản phẩm (ví dụ: từ Shopee, Lazada, Tiki)",
+    "urlPlaceholder": "Nhập link sản phẩm (ví dụ: từ Shopee, Lazada, TikTok Shop)",
     "category": "Danh mục",
     "marketplace": "Sàn thương mại",
     "analyze": "Phân tích",

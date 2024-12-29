@@ -5,8 +5,36 @@
       "subtitle": "Paste your product link to get detailed analysis and improvement suggestions"
     },
     "quickAnalysis": {
-      "placeholder": "Paste product link from Shopee, Lazada, Tiki, or Amazon",
+      "placeholder": "Paste product link from Shopee, Lazada, Tiki, or TikTok Shop",
       "analyze": "Analyze Now"
+    },
+    "topKeywords": {
+      "title": "Trending Keywords by Platform",
+      "shopee": "Shopee",
+      "lazada": "Lazada",
+      "tiktok": "TikTok Shop",
+      "term": "Keyword",
+      "volume": "Search Volume"
+    },
+    "topProducts": {
+      "title": "Top Selling Products",
+      "rank": "Rank",
+      "product": "Product",
+      "platform": "Platform",
+      "price": "Price",
+      "sales": "Sales",
+      "revenue": "Revenue"
+    },
+    "marketInsights": {
+      "title": "Market Insights",
+      "totalProducts": "Total Products",
+      "avgPrice": "Average Price",
+      "competition": "Competition Level",
+      "searchVolume": "Search Volume"
+    },
+    "charts": {
+      "popularCategories": "Popular Categories",
+      "searchVolumeTrends": "Search Volume Trends"
     },
     "features": {
       "keywords": {
@@ -32,7 +60,7 @@
     "newAnalysis": "New Analysis",
     "productDetails": "Product Details",
     "productUrl": "Product URL",
-    "urlPlaceholder": "Enter product URL (e.g., from Shopee, Lazada, Tiki)",
+    "urlPlaceholder": "Enter product URL (e.g., from Shopee, Lazada, TikTok Shop)",
     "category": "Category",
     "marketplace": "Marketplace",
     "analyze": "Analyze",

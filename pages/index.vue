@@ -35,6 +35,139 @@
       </Card>
     </div>
 
+    <!-- Top Keywords by Platform -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">{{ $t('dashboard.topKeywords.title') }}</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Shopee Keywords -->
+        <Card>
+          <template #header>
+            <div class="flex items-center gap-2 p-4">
+              <img src="/images/shopee-logo.png" alt="Shopee" class="h-6" />
+              <h3 class="text-xl font-semibold">{{ $t('dashboard.topKeywords.shopee') }}</h3>
+            </div>
+          </template>
+          <template #content>
+            <DataTable :value="shopeeKeywords" :rows="5" class="text-sm">
+              <Column field="keyword" :header="$t('dashboard.topKeywords.term')">
+                <template #body="slotProps">
+                  <div class="flex items-center gap-2">
+                    <span class="font-semibold">{{ slotProps.data.keyword }}</span>
+                    <Badge v-if="slotProps.data.trend === 'up'" value="↑" severity="success" />
+                    <Badge v-else value="↓" severity="danger" />
+                  </div>
+                </template>
+              </Column>
+              <Column field="volume" :header="$t('dashboard.topKeywords.volume')" />
+            </DataTable>
+          </template>
+        </Card>
+
+        <!-- Lazada Keywords -->
+        <Card>
+          <template #header>
+            <div class="flex items-center gap-2 p-4">
+              <img src="/images/lazada-logo.png" alt="Lazada" class="h-6" />
+              <h3 class="text-xl font-semibold">{{ $t('dashboard.topKeywords.lazada') }}</h3>
+            </div>
+          </template>
+          <template #content>
+            <DataTable :value="lazadaKeywords" :rows="5" class="text-sm">
+              <Column field="keyword" :header="$t('dashboard.topKeywords.term')">
+                <template #body="slotProps">
+                  <div class="flex items-center gap-2">
+                    <span class="font-semibold">{{ slotProps.data.keyword }}</span>
+                    <Badge v-if="slotProps.data.trend === 'up'" value="↑" severity="success" />
+                    <Badge v-else value="↓" severity="danger" />
+                  </div>
+                </template>
+              </Column>
+              <Column field="volume" :header="$t('dashboard.topKeywords.volume')" />
+            </DataTable>
+          </template>
+        </Card>
+
+        <!-- TikTok Shop Keywords -->
+        <Card>
+          <template #header>
+            <div class="flex items-center gap-2 p-4">
+              <img src="/images/tiktok-logo.png" alt="TikTok Shop" class="h-6" />
+              <h3 class="text-xl font-semibold">{{ $t('dashboard.topKeywords.tiktok') }}</h3>
+            </div>
+          </template>
+          <template #content>
+            <DataTable :value="tiktokKeywords" :rows="5" class="text-sm">
+              <Column field="keyword" :header="$t('dashboard.topKeywords.term')">
+                <template #body="slotProps">
+                  <div class="flex items-center gap-2">
+                    <span class="font-semibold">{{ slotProps.data.keyword }}</span>
+                    <Badge v-if="slotProps.data.trend === 'up'" value="↑" severity="success" />
+                    <Badge v-else value="↓" severity="danger" />
+                  </div>
+                </template>
+              </Column>
+              <Column field="volume" :header="$t('dashboard.topKeywords.volume')" />
+            </DataTable>
+          </template>
+        </Card>
+      </div>
+    </div>
+
+    <!-- Top Selling Products -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">{{ $t('dashboard.topProducts.title') }}</h2>
+      <Card>
+        <template #content>
+          <DataTable :value="topProducts" :rows="10" :paginator="true" class="text-sm">
+            <Column field="rank" :header="$t('dashboard.topProducts.rank')" style="width: 80px">
+              <template #body="slotProps">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold">
+                  {{ slotProps.data.rank }}
+                </div>
+              </template>
+            </Column>
+            <Column field="image" :header="$t('dashboard.topProducts.product')" style="width: 300px">
+              <template #body="slotProps">
+                <div class="flex items-center gap-3">
+                  <img :src="slotProps.data.image" :alt="slotProps.data.name" class="w-12 h-12 object-cover rounded" />
+                  <div>
+                    <div class="font-semibold">{{ slotProps.data.name }}</div>
+                    <div class="text-gray-500 text-xs">{{ slotProps.data.shop }}</div>
+                  </div>
+                </div>
+              </template>
+            </Column>
+            <Column field="platform" :header="$t('dashboard.topProducts.platform')" style="width: 120px">
+              <template #body="slotProps">
+                <Tag :value="slotProps.data.platform" :severity="getPlatformSeverity(slotProps.data.platform)" />
+              </template>
+            </Column>
+            <Column field="price" :header="$t('dashboard.topProducts.price')" style="width: 120px">
+              <template #body="slotProps">
+                {{ formatCurrency(slotProps.data.price) }}
+              </template>
+            </Column>
+            <Column field="sales" :header="$t('dashboard.topProducts.sales')" style="width: 120px">
+              <template #body="slotProps">
+                {{ formatNumber(slotProps.data.sales) }}
+              </template>
+            </Column>
+            <Column field="revenue" :header="$t('dashboard.topProducts.revenue')" style="width: 150px">
+              <template #body="slotProps">
+                {{ formatCurrency(slotProps.data.revenue) }}
+              </template>
+            </Column>
+            <Column style="width: 100px">
+              <template #body="slotProps">
+                <Button icon="pi pi-external-link" text rounded aria-label="View"
+                  @click="openProductLink(slotProps.data.url)" />
+              </template>
+            </Column>
+          </DataTable>
+        </template>
+      </Card>
+    </div>
+
     <!-- Features Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
       <Card v-for="feature in features" :key="feature.icon">
@@ -119,6 +252,68 @@ useHead({
   ]
 })
 
+// Mock data for top keywords
+const shopeeKeywords = ref([
+  { keyword: 'áo thun unisex', volume: '125K', trend: 'up' },
+  { keyword: 'quần jean baggy', volume: '98K', trend: 'up' },
+  { keyword: 'áo khoác bomber', volume: '87K', trend: 'down' },
+  { keyword: 'giày thể thao', volume: '76K', trend: 'up' },
+  { keyword: 'túi xách nữ', volume: '65K', trend: 'up' }
+])
+
+const lazadaKeywords = ref([
+  { keyword: 'điện thoại samsung', volume: '95K', trend: 'up' },
+  { keyword: 'laptop gaming', volume: '82K', trend: 'up' },
+  { keyword: 'máy lọc không khí', volume: '78K', trend: 'down' },
+  { keyword: 'robot hút bụi', volume: '67K', trend: 'up' },
+  { keyword: 'nồi chiên không dầu', volume: '56K', trend: 'up' }
+])
+
+const tiktokKeywords = ref([
+  { keyword: 'quần ống rộng', volume: '156K', trend: 'up' },
+  { keyword: 'áo croptop', volume: '134K', trend: 'up' },
+  { keyword: 'phụ kiện tóc', volume: '98K', trend: 'up' },
+  { keyword: 'đồ ngủ cute', volume: '87K', trend: 'down' },
+  { keyword: 'túi mini', volume: '76K', trend: 'up' }
+])
+
+// Mock data for top products
+const topProducts = ref([
+  {
+    rank: 1,
+    name: 'Áo Thun Unisex Form Rộng',
+    shop: 'Fashion Store',
+    platform: 'Shopee',
+    price: 89000,
+    sales: 15000,
+    revenue: 1335000000,
+    image: 'https://picsum.photos/seed/product1/100',
+    url: '#'
+  },
+  {
+    rank: 2,
+    name: 'Điện Thoại Samsung Galaxy A54',
+    shop: 'Mobile World',
+    platform: 'Lazada',
+    price: 8990000,
+    sales: 1200,
+    revenue: 10788000000,
+    image: 'https://picsum.photos/seed/product2/100',
+    url: '#'
+  },
+  {
+    rank: 3,
+    name: 'Set Đồ Nữ Hàn Quốc',
+    shop: 'Korea Fashion',
+    platform: 'TikTok Shop',
+    price: 259000,
+    sales: 8500,
+    revenue: 2201500000,
+    image: 'https://picsum.photos/seed/product3/100',
+    url: '#'
+  }
+])
+
 const features = [
   {
     icon: 'pi-chart-line',
@@ -136,6 +331,28 @@ const features = [
     description: 'dashboard.features.recommendations.description'
   }
 ]
+
+// Utility functions
+const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND'
+  }).format(value)
+}
+
+const formatNumber = (value: number) => {
+  return new Intl.NumberFormat('vi-VN').format(value)
+}
+
+type Platform = 'Shopee' | 'Lazada' | 'TikTok Shop'
+const getPlatformSeverity = (platform: Platform) => {
+  const severities: Record<Platform, string> = {
+    'Shopee': 'warning',
+    'Lazada': 'info',
+    'TikTok Shop': 'success'
+  }
+  return severities[platform] || 'primary'
+}
 
 const startAnalysis = async () => {
   if (!productUrl.value) return
@@ -167,11 +384,14 @@ const getProductImage = (analysis: any) => {
 }
 
 const detectMarketplace = (url: string) => {
-  if (url.includes('amazon')) return 'amazon'
   if (url.includes('shopee')) return 'shopee'
   if (url.includes('lazada')) return 'lazada'
-  if (url.includes('tiki')) return 'tiki'
+  if (url.includes('tiktok')) return 'tiktok'
   return 'other'
+}
+
+const openProductLink = (url: string) => {
+  window.open(url, '_blank')
 }
 
 onMounted(() => {
